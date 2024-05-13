@@ -1,22 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Constructor;
+import java.awt.event.ActionEvent;
+// import java.lang.reflect.Constructor;
+import java.awt.event.ActionListener;
 
-public class Calculator {
+public class Calculator implements ActionListener{
     JFrame frame;
     JTextField textField;
     JButton[] numberButtons = new JButton[10];      // Buttons for numbers (0, 1, 2, ...)
-    JButton[] operationButtons = new JButton[4];    // Buttons for operations (+, -, *, /, sin, ... + delete, decimal etc)
+    JButton[] operationButtons = new JButton[12];    // Buttons for operations (+, -, *, /, sin, ... + delete, decimal etc)
     
     // Operation Buttons that will be added in the 'operationButtons' array:
-    JButton divButton, mulButton, addButton, subbButton;
-    JButton decButton, delButton, clrButton, eqButton;
+    JButton divButton, mulButton, addButton, subButton;
+    JButton decButton, delButton, clrButton, equButton;
+    JButton sqrtButton, sqrButton, modButton, inverseButton;
     
     // Panel to hold all the buttons
-    JPanel panel;
+    JPanel buttonsPanel;
 
     // Font for the UI
-    Font myFont = new Font("Poppins", Font.BOLD, 30);
+    Font myFont = new Font("Poppins", Font.BOLD, 20);
 
     // Numbers that will be used for calculations
     double firstOperand = 0, secondOperand = 0, result = 0;
@@ -38,10 +41,84 @@ public class Calculator {
         textField.setFont(myFont);                              // Setting the font of text
         textField.setEditable(false);                         // Not allowing users to update the textfield directly
         
+        // Operation Buttons
+        addButton = new JButton("+");
+        subButton = new JButton("-");
+        mulButton = new JButton("*");
+        divButton = new JButton("/");
+        delButton = new JButton("DEL");
+        clrButton = new JButton("CLR");
+        equButton = new JButton("=");
+        decButton = new JButton(".");
+        sqrtButton = new JButton("√");
+        sqrButton = new JButton("^2");
+        modButton = new JButton("%");
+        inverseButton = new JButton("1/x");
+        
+        // adding the operation buttons to the array
+        operationButtons[0] = addButton;
+        operationButtons[1] = subButton;
+        operationButtons[2] = mulButton;
+        operationButtons[3] = divButton;
+        operationButtons[4] = decButton;
+        operationButtons[5] = equButton;
+        operationButtons[6] = delButton;
+        operationButtons[7] = clrButton;
+        operationButtons[8] = modButton;
+        operationButtons[9] = sqrButton;
+        operationButtons[10] = sqrtButton;
+        operationButtons[11] = inverseButton;
 
+        // setting some properties to the buttons
+        for(JButton button : operationButtons) {
+            button.addActionListener(this);         // allows to do something when interacted with the buttons
+            button.setFont(myFont);                 // setting the font
+            button.setFocusable(false);
+        }
+
+        // adding the number buttons
+        for(int i = 0; i < 10; i ++){
+            numberButtons[i] = new JButton(Integer.toString(i));
+            numberButtons[i].addActionListener(this);         // allows to do something when interacted with the buttons
+            numberButtons[i].setFont(myFont);                 // setting the font
+        }
+
+        // initializing the panel
+        buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new GridLayout(5, 4));   // grid of 5 buttons x 4 buttons
+        buttonsPanel.setBounds(20, 100, 350, 300);   // setting position and dimensions
+
+        // adding the buttons to the panel (done manually for correct layout of buttons)
+        buttonsPanel.add(inverseButton);
+        buttonsPanel.add(modButton);
+        buttonsPanel.add(sqrtButton);
+        buttonsPanel.add(sqrButton);
+        buttonsPanel.add(numberButtons[1]);
+        buttonsPanel.add(numberButtons[2]);
+        buttonsPanel.add(numberButtons[3]);
+        buttonsPanel.add(mulButton);
+        buttonsPanel.add(numberButtons[4]);
+        buttonsPanel.add(numberButtons[5]);
+        buttonsPanel.add(numberButtons[6]);
+        buttonsPanel.add(addButton);
+        buttonsPanel.add(numberButtons[7]);
+        buttonsPanel.add(numberButtons[8]);
+        buttonsPanel.add(numberButtons[9]);
+        buttonsPanel.add(subButton);
+        buttonsPanel.add(decButton);
+        buttonsPanel.add(numberButtons[0]);
+        buttonsPanel.add(equButton);
+        buttonsPanel.add(divButton);
 
         // Adding all the components to the frame
+        frame.add(buttonsPanel);                                // Adding the panel
         frame.add(textField);                                   // Adding the textfield
         frame.setVisible(true);                               // Shows the actual calculator
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
