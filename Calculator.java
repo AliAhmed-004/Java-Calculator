@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,12 +37,17 @@ public class Calculator implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Allows for closing the calcultor permanently
         frame.setSize(400, 550); // Setting the width and height of the frame
         frame.setLayout(null); 
+        frame.getContentPane().setBackground(new Color(5, 5, 5));  //Setting background color
+        frame.setResizable(false);
 
         // Textfield
         textField = new JTextField();
         textField.setBounds(20, 30, 350, 50); // Setting position and dimensions of the textfield in the frame
         textField.setFont(myFont); // Setting the font of text
         textField.setEditable(false); // Not allowing users to update the textfield directly
+        textField.setBackground(new Color(31, 31, 31));     // setting background color
+        textField.setForeground(new Color(235, 235, 235));  // setting font color
+        textField.setBorder(null);
 
         // Standard operation Buttons
         addButton = new JButton("+");
@@ -72,15 +79,19 @@ public class Calculator implements ActionListener {
         standardCalculationButtons[11] = inverseButton;
         standardCalculationButtons[12] = negButton;
 
-        delButton.setBounds(22, 410, 115, 50);
+        delButton.setBounds(20, 410, 113, 50);
         negButton.setBounds(137, 410, 115, 50);
-        clrButton.setBounds(252, 410,115, 50);
+        clrButton.setBounds(256, 410,113, 50);
 
         // setting some properties to the standard operations buttons
         for (JButton button : standardCalculationButtons) {
             button.addActionListener(this); // allows to do something when interacted with the buttons
             button.setFont(myFont); // setting the font
             button.setFocusable(false);
+            button.setContentAreaFilled(false);
+            button.setBackground(new Color(105, 105, 105)); // setting background color
+            button.setForeground(new Color(235, 235, 235)); // setting foreground color
+            button.setFocusPainted(false);
         }
         
         // adding the number buttons
@@ -88,12 +99,17 @@ public class Calculator implements ActionListener {
             numberButtons[i] = new JButton(Integer.toString(i));
             numberButtons[i].addActionListener(this); // allows to do something when interacted with the buttons
             numberButtons[i].setFont(myFont); // setting the font
+            numberButtons[i].setContentAreaFilled(false);
+            numberButtons[i].setBackground(new Color(105, 105, 105)); // setting background color
+            numberButtons[i].setForeground(new Color(235, 235, 235)); // setting foreground color
+            numberButtons[i].setFocusPainted(false);
         }
 
         // initializing the standard operation buttons panel
         standardCalculationButtonsPanel = new JPanel();
-        standardCalculationButtonsPanel.setLayout(new GridLayout(0, 4)); // grid of 5 buttons x 4 buttons
+        standardCalculationButtonsPanel.setLayout(new GridLayout(0, 4, 3, 3)); // grid of 5 buttons x 4 buttons
         standardCalculationButtonsPanel.setBounds(20, 100, 350, 300); // setting position and dimensions
+        standardCalculationButtonsPanel.setBackground(null);
 
         // adding the standard buttons to the panel (done manually for correct layout of buttons)
         standardCalculationButtonsPanel.add(inverseButton);
