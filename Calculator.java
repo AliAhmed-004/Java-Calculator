@@ -1,26 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-// import java.lang.reflect.Constructor;
 import java.awt.event.ActionListener;
 
 public class Calculator implements ActionListener {
     JFrame frame;
     JTextField textField;
     JButton[] numberButtons = new JButton[10]; // Buttons for numbers (0, 1, 2, ...)
-    JButton[] operationButtons = new JButton[13]; // Buttons for operations (+, -, *, /, sin, ... + delete, decimal etc)
+    JButton[] standardCalculationButtons = new JButton[13]; // Buttons for operations (+, -, .. ,  decimal and number buttons etc)
 
-    // Operation Buttons that will be added in the 'operationButtons' array:
+    // Standard operation Buttons that will be added in the 'standardCalculationButtons' array:
     JButton divButton, mulButton, addButton, subButton;
     JButton decButton, delButton, clrButton, equButton;
     JButton sqrtButton, sqrButton, modButton, inverseButton, negButton;
-    // JButton sinButton, cosButton, tanButton, factorialButton;
+    
 
     // Panel to hold all the buttons
-    JPanel buttonsPanel;
+    JPanel standardCalculationButtonsPanel;                  // used to hold all buttons
+
 
     // Font for the UI
-    Font myFont = new Font("Poppins", Font.BOLD, 20);
+    Font myFont = new Font("Poppins", Font.PLAIN, 20);
 
     // Numbers that will be used for calculations
     double firstOperand = 0, secondOperand = 0, result = 0;
@@ -33,8 +33,8 @@ public class Calculator implements ActionListener {
         frame = new JFrame("Calculator"); // Initializing the frame
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Allows for closing the calcultor permanently
-        frame.setSize(400, 500); // Setting the width and height of the frame
-        frame.setLayout(null);
+        frame.setSize(400, 550); // Setting the width and height of the frame
+        frame.setLayout(null); 
 
         // Textfield
         textField = new JTextField();
@@ -42,7 +42,7 @@ public class Calculator implements ActionListener {
         textField.setFont(myFont); // Setting the font of text
         textField.setEditable(false); // Not allowing users to update the textfield directly
 
-        // Operation Buttons
+        // Standard operation Buttons
         addButton = new JButton("+");
         subButton = new JButton("-");
         mulButton = new JButton("*");
@@ -57,32 +57,32 @@ public class Calculator implements ActionListener {
         modButton = new JButton("%");
         inverseButton = new JButton("1/x");
 
-        // adding the operation buttons to the array
-        operationButtons[0] = addButton;
-        operationButtons[1] = subButton;
-        operationButtons[2] = mulButton;
-        operationButtons[3] = divButton;
-        operationButtons[4] = decButton;
-        operationButtons[5] = equButton;
-        operationButtons[6] = delButton;
-        operationButtons[7] = clrButton;
-        operationButtons[8] = modButton;
-        operationButtons[9] = sqrButton;
-        operationButtons[10] = sqrtButton;
-        operationButtons[11] = inverseButton;
-        operationButtons[12] = negButton;
+        // adding the standard operation buttons to the array
+        standardCalculationButtons[0] = addButton;
+        standardCalculationButtons[1] = subButton;
+        standardCalculationButtons[2] = mulButton;
+        standardCalculationButtons[3] = divButton;
+        standardCalculationButtons[4] = decButton;
+        standardCalculationButtons[5] = equButton;
+        standardCalculationButtons[6] = delButton;
+        standardCalculationButtons[7] = clrButton;
+        standardCalculationButtons[8] = modButton;
+        standardCalculationButtons[9] = sqrButton;
+        standardCalculationButtons[10] = sqrtButton;
+        standardCalculationButtons[11] = inverseButton;
+        standardCalculationButtons[12] = negButton;
 
         delButton.setBounds(22, 410, 115, 50);
         negButton.setBounds(137, 410, 115, 50);
         clrButton.setBounds(252, 410,115, 50);
 
-        // setting some properties to the buttons
-        for (JButton button : operationButtons) {
+        // setting some properties to the standard operations buttons
+        for (JButton button : standardCalculationButtons) {
             button.addActionListener(this); // allows to do something when interacted with the buttons
             button.setFont(myFont); // setting the font
             button.setFocusable(false);
         }
-
+        
         // adding the number buttons
         for (int i = 0; i < 10; i++) {
             numberButtons[i] = new JButton(Integer.toString(i));
@@ -90,38 +90,39 @@ public class Calculator implements ActionListener {
             numberButtons[i].setFont(myFont); // setting the font
         }
 
-        // initializing the panel
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(5, 4)); // grid of 5 buttons x 4 buttons
-        buttonsPanel.setBounds(20, 100, 350, 300); // setting position and dimensions
+        // initializing the standard operation buttons panel
+        standardCalculationButtonsPanel = new JPanel();
+        standardCalculationButtonsPanel.setLayout(new GridLayout(0, 4)); // grid of 5 buttons x 4 buttons
+        standardCalculationButtonsPanel.setBounds(20, 100, 350, 300); // setting position and dimensions
 
-        // adding the buttons to the panel (done manually for correct layout of buttons)
-        buttonsPanel.add(inverseButton);
-        buttonsPanel.add(modButton);
-        buttonsPanel.add(sqrtButton);
-        buttonsPanel.add(sqrButton);
-        buttonsPanel.add(numberButtons[7]);
-        buttonsPanel.add(numberButtons[8]);
-        buttonsPanel.add(numberButtons[9]);
-        buttonsPanel.add(mulButton);
-        buttonsPanel.add(numberButtons[4]);
-        buttonsPanel.add(numberButtons[5]);
-        buttonsPanel.add(numberButtons[6]);
-        buttonsPanel.add(addButton);
-        buttonsPanel.add(numberButtons[1]);
-        buttonsPanel.add(numberButtons[2]);
-        buttonsPanel.add(numberButtons[3]);
-        buttonsPanel.add(subButton);
-        buttonsPanel.add(decButton);
-        buttonsPanel.add(numberButtons[0]);
-        buttonsPanel.add(equButton);
-        buttonsPanel.add(divButton);
+        // adding the standard buttons to the panel (done manually for correct layout of buttons)
+        standardCalculationButtonsPanel.add(inverseButton);
+        standardCalculationButtonsPanel.add(modButton);
+        standardCalculationButtonsPanel.add(sqrtButton);
+        standardCalculationButtonsPanel.add(sqrButton);
+        standardCalculationButtonsPanel.add(numberButtons[7]);
+        standardCalculationButtonsPanel.add(numberButtons[8]);
+        standardCalculationButtonsPanel.add(numberButtons[9]);
+        standardCalculationButtonsPanel.add(mulButton);
+        standardCalculationButtonsPanel.add(numberButtons[4]);
+        standardCalculationButtonsPanel.add(numberButtons[5]);
+        standardCalculationButtonsPanel.add(numberButtons[6]);
+        standardCalculationButtonsPanel.add(addButton);
+        standardCalculationButtonsPanel.add(numberButtons[1]);
+        standardCalculationButtonsPanel.add(numberButtons[2]);
+        standardCalculationButtonsPanel.add(numberButtons[3]);
+        standardCalculationButtonsPanel.add(subButton);
+        standardCalculationButtonsPanel.add(decButton);
+        standardCalculationButtonsPanel.add(numberButtons[0]);
+        standardCalculationButtonsPanel.add(equButton);
+        standardCalculationButtonsPanel.add(divButton);
+        
 
         // Adding all the components to the frame
         frame.add(delButton);
         frame.add(negButton);
         frame.add(clrButton);
-        frame.add(buttonsPanel); // Adding the panel
+        frame.add(standardCalculationButtonsPanel); // Adding the standard panel
         frame.add(textField); // Adding the textfield
         frame.setVisible(true); // Shows the actual calculator
     }
@@ -131,8 +132,10 @@ public class Calculator implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // number buttons
         for (int i = 0; i < 10; i++) {
-            if (e.getSource() == numberButtons[i]) {
-                textField.setText(textField.getText().concat(String.valueOf(i))); // adds the number to the textfield when the button is clicked
+            if(result == 0) {
+                if (e.getSource() == numberButtons[i]) {
+                    textField.setText(textField.getText().concat(String.valueOf(i))); // adds the number to the textfield when the button is clicked
+                }
             }
         }
 
@@ -174,6 +177,7 @@ public class Calculator implements ActionListener {
                 firstOperand = Double.parseDouble(textField.getText());
                 result = Math.pow(firstOperand, 2);
                 textField.setText(String.valueOf(result));
+                result = 0;
             }
         }
         if (e.getSource() == sqrtButton) {                  // square root button
@@ -181,6 +185,7 @@ public class Calculator implements ActionListener {
                 firstOperand = Double.parseDouble(textField.getText());
                 result = Math.sqrt(firstOperand);
                 textField.setText(String.valueOf(result));
+                result = 0;
             }
 
         }
@@ -190,6 +195,7 @@ public class Calculator implements ActionListener {
                 result = 1 / firstOperand;
                 System.out.println(result);
                 textField.setText(String.valueOf(result));
+                result = 0;
             }
         }
         if (e.getSource() == modButton) {                   // modulus button
@@ -204,6 +210,7 @@ public class Calculator implements ActionListener {
             firstOperand = Double.parseDouble(textField.getText());
             result = 1 / firstOperand;
             textField.setText(String.valueOf(result));
+            result = 0;
         }
 
         if (e.getSource() == clrButton) {                   // clear button
@@ -243,6 +250,7 @@ public class Calculator implements ActionListener {
                     textField.setText("No division by zero, dum dum");
                 }
             }
+            result = 0;
         }
 
         if(e.getSource() == negButton) {                    // negative button
@@ -254,6 +262,5 @@ public class Calculator implements ActionListener {
                 textField.setText(String.valueOf(temp));
             }
         }
-
     }
 }
