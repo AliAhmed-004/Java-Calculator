@@ -10,8 +10,8 @@ public class Calculator implements ActionListener {
     JButton[] calculationButtons = new JButton[21]; // Buttons for operations (+, -, .. ,  decimal and number buttons etc)
 
     JMenuBar menuBar;
-    JMenu menu;
-    JMenuItem standardMode, scientificMode;
+    JMenu modeMenu, themeMenu;
+    JMenuItem standardMode, scientificMode, oceanicTheme, MidnightTheme, coffeeTheme;
 
     // buttons to add to standard buttons panel
     JButton divButton, mulButton, addButton, subButton;
@@ -43,9 +43,8 @@ public class Calculator implements ActionListener {
         frame = new JFrame("Calculator"); // Initializing the frame
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);            // Allows for closing the calcultor permanently
-        frame.setSize(400, 550);                            // Setting the width and height of the frame
+        frame.setSize(415, 550);                            // Setting the width and height of the frame
         frame.setLayout(null); 
-        frame.getContentPane().setBackground(new Color(5, 5, 5));  //Setting background color
         frame.setResizable(false);
 
         // Textfield
@@ -53,23 +52,39 @@ public class Calculator implements ActionListener {
         textField.setBounds(20, 30, 350, 50);       // Setting position and dimensions of the textfield in the frame
         textField.setFont(myFont);                                   // Setting the font of text
         textField.setEditable(false);                              // Not allowing users to update the textfield directly
-        textField.setBackground(new Color(31, 31, 31));        // setting background color
-        textField.setForeground(new Color(235, 235, 235));     // setting font color
         textField.setBorder(null);                            // removing border
 
+        // modes
         menuBar = new JMenuBar();                                    // initializing menubar
-        menu = new JMenu("Modes");                                 // initializing menu
+        modeMenu = new JMenu("Modes");                                 // initializing menu
 
         standardMode = new JMenuItem("Standard");               // initializing menu items
         standardMode.addActionListener(this);
         scientificMode = new JMenuItem("Scientific");           // ...
         scientificMode.addActionListener(this);
 
-        menu.add(standardMode);                                      // adding menu items to menu
-        menu.add(scientificMode);                                    // ...
+        modeMenu.add(standardMode);                                      // adding menu items to menu
+        modeMenu.add(scientificMode);                                    // ...
 
-        menuBar.add(menu);                                           // adding menu to menubar
-        menuBar.setVisible(true);                              // setting menubar visible 
+        // themes
+        themeMenu = new JMenu("Themes");
+
+        oceanicTheme = new JMenuItem("Oceanic");
+        oceanicTheme.addActionListener(this);
+
+        MidnightTheme = new JMenuItem("Midnight");
+        MidnightTheme.addActionListener(this);
+        
+        coffeeTheme = new JMenuItem("Coffee");
+        coffeeTheme.addActionListener(this);
+
+        themeMenu.add(oceanicTheme);
+        themeMenu.add(MidnightTheme);
+        themeMenu.add(coffeeTheme);
+
+        menuBar.add(modeMenu);                                      // adding mode menu to menubar
+        menuBar.add(themeMenu);                                     // adding theme menu to menubar
+        menuBar.setVisible(true);                             // setting menubar visible 
 
         // Standard Buttons
         addButton = new JButton("+");
@@ -101,6 +116,7 @@ public class Calculator implements ActionListener {
         calculationButtons[1] = subButton;
         calculationButtons[2] = mulButton;
         calculationButtons[3] = divButton;
+
         calculationButtons[4] = decButton;
         calculationButtons[5] = equButton;
         calculationButtons[6] = delButton;
@@ -128,9 +144,6 @@ public class Calculator implements ActionListener {
             button.addActionListener(this); // allows to do something when interacted with the buttons
             button.setFont(myFont); // setting the font
             button.setFocusable(false);
-            button.setContentAreaFilled(false);
-            button.setBackground(new Color(105, 105, 105)); // setting background color
-            button.setForeground(new Color(235, 235, 235)); // setting foreground color
             button.setFocusPainted(false);
         }
         
@@ -139,28 +152,25 @@ public class Calculator implements ActionListener {
             numberButtons[i] = new JButton(Integer.toString(i));
             numberButtons[i].addActionListener(this); // allows to do something when interacted with the buttons
             numberButtons[i].setFont(numpadFont); // setting the font
-            numberButtons[i].setContentAreaFilled(false);
-            numberButtons[i].setBackground(new Color(105, 105, 105)); // setting background color
-            numberButtons[i].setForeground(new Color(235, 235, 235)); // setting foreground color
             numberButtons[i].setFocusPainted(false);
         }
 
         // initializing numpad panel
         numpadPanel = new JPanel();
-        numpadPanel.setLayout(new GridLayout(0, 3, 3, 3));
-        numpadPanel.setBounds(22, 250, 260, 150);
+        numpadPanel.setLayout(new GridLayout(0, 3, 4, 3));
+        numpadPanel.setBounds(22, 250, 258, 150);
         numpadPanel.setBackground(null);
         
         // initializing the standard operation buttons panel
         standardButtonsPanel = new JPanel();
         standardButtonsPanel.setLayout(new GridLayout(4, 0, 3, 3)); // 4 rows
-        standardButtonsPanel.setBounds(275, 250, 90, 150); // setting position and dimensions
+        standardButtonsPanel.setBounds(283, 250, 86, 150); // setting position and dimensions
         standardButtonsPanel.setBackground(null);
         
         //initializing the scientific operation buttons panel
         scientificButtonsPanel = new JPanel();
-        scientificButtonsPanel.setLayout(new GridLayout(0, 4, 3, 3)); // 1 column 
-        scientificButtonsPanel.setBounds(22, 93, 345, 150); // setting position and dimensions
+        scientificButtonsPanel.setLayout(new GridLayout(0, 4, 4, 3)); // 1 column 
+        scientificButtonsPanel.setBounds(22, 93, 348, 152); // setting position and dimensions
         scientificButtonsPanel.setBackground(null);
         
         // numpad panel
@@ -197,6 +207,8 @@ public class Calculator implements ActionListener {
         scientificButtonsPanel.add(cotButton);
         scientificButtonsPanel.add(factorialButton);
         
+        // setting coffee theme as default
+        setCoffeeTheme();
 
         // Adding all the components to the frame
         frame.add(numpadPanel);
@@ -408,13 +420,122 @@ public class Calculator implements ActionListener {
             frame.revalidate();
             frame.repaint();
         }
+
+        // Changing themes
+        if(e.getSource() == oceanicTheme) {
+            setOceanicTheme();
+        }
+        if(e.getSource() == MidnightTheme) {
+            setMidnightTheme();
+        }
+        if(e.getSource() == coffeeTheme) {
+            setCoffeeTheme();
+        }
     }
 
+    // method for finding factorial
     public static double factorial(double n) {
         if (n == 0 || n == 1) {
             return 1;
         } else {
             return n * factorial(n - 1);
         }
+    }
+
+    // methods to change the themes
+    public void setOceanicTheme() {                                            // Oceanic Theme
+        frame.getContentPane().setBackground(new Color(21, 52, 72));
+        textField.setBackground(new Color(60, 91, 111));
+
+        for(Component comp : numpadPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(223, 208, 184));    
+                button.setForeground(new Color(163, 129, 73));   
+            }
+        }
+        
+        for(Component comp : standardButtonsPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(60, 91, 111));
+            }
+        }
+        
+        for(Component comp : scientificButtonsPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(148, 137, 121));
+            }
+        }
+
+        equButton.setBackground(new Color(255, 215, 0));
+        delButton.setBackground(new Color(148, 137, 121));
+        negButton.setBackground(new Color(148, 137, 121));
+        clrButton.setBackground(new Color(148, 137, 121));
+    }
+
+    public  void setMidnightTheme() {                                              //Midnight Theme
+        frame.getContentPane().setBackground(new Color(7, 15, 43));
+        textField.setBackground(new Color(83, 92, 145));
+
+        for(Component comp : numpadPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(27, 26, 85));
+                button.setForeground(new Color(139, 138, 209));
+            }
+        }
+        
+        for(Component comp : standardButtonsPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(146, 144, 195));
+            }
+        }
+        
+        for(Component comp : scientificButtonsPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(83, 92, 145));
+            }
+        }
+
+        equButton.setBackground(new Color(83, 92, 145));
+        delButton.setBackground(new Color(83, 92, 145));
+        negButton.setBackground(new Color(83, 92, 145));
+        clrButton.setBackground(new Color(83, 92, 145));
+    }
+
+    public  void setCoffeeTheme() {                                               // coffee Theme
+        frame.getContentPane().setBackground(new Color(62, 50, 50));
+        textField.setBackground(new Color(80, 60, 60));
+
+        for(Component comp : numpadPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(80, 60, 60));
+                button.setForeground(new Color(224, 173, 173));
+            }
+        }
+        
+        for(Component comp : standardButtonsPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(168, 124, 124));
+            }
+        }
+        
+        for(Component comp : scientificButtonsPanel.getComponents()) {
+            if(comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setBackground(new Color(126,  99, 99));
+            }
+        }
+
+        equButton.setBackground(new Color(245, 86, 86));
+        delButton.setBackground(new Color(126, 99, 99));
+        negButton.setBackground(new Color(126, 99, 99));
+        clrButton.setBackground(new Color(126, 99, 99));
     }
 }
