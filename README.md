@@ -12,7 +12,7 @@ Other than that, the past code was round about 900 lines or so. This revised cod
 I also managed to add separate methods for tasks like changing the mode and theme, which I didn't do before.
 
 # Screen Shots
-Different themes 
+
 ![Oceanic Theme](https://github.com/AliAhmed-004/Java-Calculator/assets/142042113/d0528303-e26e-42da-9a07-11b7b6db5894)
 ![Midnight Theme](https://github.com/AliAhmed-004/Java-Calculator/assets/142042113/98c55d54-3f11-47bc-a615-5de3735499f3)
 ![Coffee Theme (Default)](https://github.com/AliAhmed-004/Java-Calculator/assets/142042113/49338c4d-6343-4304-ba35-5b077d4abf21)
